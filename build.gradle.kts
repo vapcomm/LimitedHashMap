@@ -1,9 +1,9 @@
 plugins {
-    kotlin("multiplatform") version "1.9.0"
+    kotlin("multiplatform") version "2.0.21"
 }
 
 group = "online.vapcom"
-version = "1.0.0"
+version = "1.1.0"
 
 repositories {
     mavenCentral()
@@ -11,7 +11,6 @@ repositories {
 
 kotlin {
     jvm {
-        jvmToolchain(8)
         withJava()
         testRuns.named("test") {
             executionTask.configure {
@@ -31,7 +30,6 @@ kotlin {
         else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
     }
 
-    
     sourceSets {
         val commonMain by getting
         val commonTest by getting {

@@ -111,4 +111,42 @@ class LimitedHashMapTest {
         assertEquals(0, map.size)
     }
 
+    @Test
+    fun remove() {
+        val map = LimitedHashMap<String, String>(4)
+        map.insert("one", "1")
+        map.insert("two", "2")
+        map.insert("three", "3")
+        map.insert("four", "4")
+        assertEquals("four:4,three:3,two:2,one:1", map.popListToString())
+        assertEquals(4, map.size)
+
+        map.remove("unknown") // nothing removed
+        assertEquals("four:4,three:3,two:2,one:1", map.popListToString())
+        assertEquals(4, map.size)
+
+        map.remove("two")   // middle element
+        assertEquals("four:4,three:3,one:1", map.popListToString())
+        assertEquals(3, map.size)
+
+        map.remove("one")   // tail element
+        assertEquals("four:4,three:3", map.popListToString())
+        assertEquals(2, map.size)
+
+        map.remove("four")   // head element
+        assertEquals("three:3", map.popListToString())
+        assertEquals(1, map.size)
+
+        map.remove("three")  // last element
+        assertEquals("", map.popListToString())
+        assertEquals(0, map.size)
+
+        map.remove("three")  // last element again
+
+        // and everything still works fine
+        map.insert("five", "5")
+        assertEquals("five:5", map.popListToString())
+        assertEquals(1, map.size)
+    }
+
 }

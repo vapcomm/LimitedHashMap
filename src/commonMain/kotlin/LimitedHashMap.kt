@@ -85,6 +85,17 @@ class LimitedHashMap<K : Any, V : Any>(private val maxLoad: Int) {
         storage.clear()
     }
 
+    /**
+     * Remove value by key
+     */
+    fun remove(key: K) {
+        val node = storage.remove(key)
+        if (node != null) {
+            popList.remove(node)
+        }
+    }
+
+
     internal fun popListToString(): String {
         return popList.toString()
     }
@@ -155,7 +166,7 @@ class LimitedHashMap<K : Any, V : Any>(private val maxLoad: Int) {
             }
         }
 
-        private fun remove(node: KeyNode) {
+        fun remove(node: KeyNode) {
             val prev = node.prev
             val next = node.next
 
